@@ -1,0 +1,10 @@
+{
+    "name": "lehadnk/crawler-client",
+    "authors": [
+        {
+            "name": "Alexey Zauzin",
+            "email": "lehadnk@gmail.com"
+        }
+    ],
+    "require": {}
+}
