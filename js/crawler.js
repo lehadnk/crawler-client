@@ -1,13 +1,42 @@
 var net = new WebTCP('127.0.0.1', 9999);
 
-var socket = net.createSocket('localhost', 1488);
+options = {
+    encoding: "utf-8",
+    timeout: 0,
+    noDelay: true,
+    keepAlive: true,
+    initialDelay: 0
+};
+
+var socket = net.createSocket('localhost', 1488, options);
+
+processPacket = function(data) {
+    var delimiter = data.search(' ');
+
+    if (delimiter == -1) {
+        return;
+    }
+
+    var length = data.slice(0, delimiter);
+    var contents = data.slice(delimiter+1);
+    var html = contents.slice(0, length);
+
+    // Check if this packet was combined
+    var restPart = contents.slice(length);
+    if (restPart.length > 0) {
+        processPacket(restPart);
+    }
+
+    document.getElementById('main').innerHTML = "<pre>"+html+"</pre>";
+}
 
 socket.on('data', function(data) {
-    document.getElementById('main').innerHTML = "<pre>"+data+"</pre>";
+    processPacket(data);
 });
 
 socket.write("hello");
 
+// Player controls
 document.onkeydown = checkKey;
 
 function checkKey(e) {
