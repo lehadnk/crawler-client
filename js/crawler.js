@@ -34,6 +34,10 @@ socket.on('data', function(data) {
     processPacket(data);
 });
 
+socket.on('close', function(event, data) {
+    document.getElementById('main').innerHTML = 'Cannot connect a server on 127.0.0.1:1488';
+});
+
 socket.write("hello");
 
 // Player controls
