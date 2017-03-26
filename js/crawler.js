@@ -63,5 +63,8 @@ function checkKey(e) {
         // down
         socket.write('move 2');
     }
-
+    else if (e.keyCode == '32') {
+        // space
+        socket.write('swing');
+    }
 }
